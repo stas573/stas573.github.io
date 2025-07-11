@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Купить ⭐ в Telegram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+         :root {
+            --primary: #2c3e50;
+            --accent: #f1c40f;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--light);
+            color: var(--primary);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: var(--dark);
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+        }
+        
+        header h1 {
+            font-size: 2rem;
+        }
+        
+        .container {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .custom {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .custom button {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: .8rem 1.6rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .calculator-inline {
+            display: none;
+            background: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-top: .5rem;
+        }
+        
+        .calculator-inline label {
+            display: block;
+            margin-bottom: .5rem;
+            font-size: 1rem;
+        }
+        
+        .calculator-inline input {
+            width: 100%;
+            padding: .5rem;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            margin-bottom: .5rem;
+            font-size: 1rem;
+        }
+        
+        .calculator-inline .result {
+            font-size: 1.2rem;
+            margin-bottom: .5rem;
+            text-align: center;
+        }
+        
+        .calculator-inline button {
+            width: 100%;
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: .6rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .plans {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            width: 100%;
+            max-width: 800px;
+            margin-top: 1rem;
+        }
+        
+        .plan-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .plan-header {
+            background: var(--accent);
+            padding: 1rem;
+        }
+        
+        .plan-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+        
+        .plan-body {
+            padding: 1rem;
+        }
+        
+        .plan-body p {
+            margin-bottom: .5rem;
+            font-size: 1.2rem;
+        }
+        
+        .plan-body button {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: .6rem 1rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: var(--dark);
+            color: white;
+            font-size: .8rem;
+            margin-top: 2rem;
+        }
+        /* Оверлей и чекаут */
+        
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .checkout {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .checkout h1 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .checkout .pay-info {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .checkout .divider {
+            height: 1px;
+            background: #ddd;
+            margin: 1rem 0;
+        }
+        
+        .checkout .details {
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        .checkout .details .copyable {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        
+        .checkout .details .copyable span {
+            font-size: 1.1rem;
+        }
+        
+        .checkout .details .copyable button {
+            background: var(--accent);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+        
+        .checkout .details p {
+            margin: 0.3rem 0;
+            font-size: 1.1rem;
+        }
+        /* Кнопка “Предоставить чек” */
+        
+        .receipt-btn {
+            display: block;
+            margin: 1.5rem auto 0;
+            padding: .8rem;
+            background: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: var(--radius);
+            width: 100%;
+            box-sizing: border-box;
+            transition: background .2s;
+        }
+        
+        .receipt-btn:hover {
+            background: #e0b213;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Купить ⭐ для Telegram</h1>
+    </header>
+    <div class="container">
+
+        <div class="custom">
+            <button id="toggleCalcBtn">Выбрать др. кол-во звёзд ⭐</button>
+            <div class="calculator-inline" id="calculatorInline">
+                <label for="customStars">Введите количество (мин. 50):</label>
+                <input type="number" id="customStars" min="50" placeholder="мин. 50" />
+                <div class="result" id="inlineResult">К оплате: 0 ₽</div>
+                <button id="inlinePayBtn" disabled>Оплатить</button>
+            </div>
+        </div>
+
+        <div class="plans">
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h2>50 ⭐</h2>
+                </div>
+                <div class="plan-body">
+                    <p>80 ₽</p><button onclick="showCheckout(50,80)">Купить</button></div>
+            </div>
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h2>75 ⭐</h2>
+                </div>
+                <div class="plan-body">
+                    <p>115 ₽</p><button onclick="showCheckout(75,115)">Купить</button></div>
+            </div>
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h2>100 ⭐</h2>
+                </div>
+                <div class="plan-body">
+                    <p>150 ₽</p><button onclick="showCheckout(100,150)">Купить</button></div>
+            </div>
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h2>200 ⭐</h2>
+                </div>
+                <div class="plan-body">
+                    <p>300 ₽</p><button onclick="showCheckout(200,300)">Купить</button></div>
+            </div>
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h2>500 ⭐</h2>
+                </div>
+                <div class="plan-body">
+                    <p>750 ₽</p><button onclick="showCheckout(500,750)">Купить</button></div>
+            </div>
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h2>1000 ⭐</h2>
+                </div>
+                <div class="plan-body">
+                    <p>1500 ₽</p><button onclick="showCheckout(1000,1500)">Купить</button></div>
+            </div>
+        </div>
+        <footer>&copy; 2025 Ваш Телеграм Бот</footer>
+    </div>
+    <!-- Checkout Overlay -->
+    <div id="overlay">
+        <div class="checkout">
+            <h1>Оформление заказа</h1>
+            <div class="pay-info" id="payInfo">К оплате: 0 ₽</div>
+            <div class="divider"></div>
+            <div class="details">
+                <div class="copyable">
+                    <span id="phoneNumber">+79883221294</span>
+                    <button id="copyPhoneBtn" data-copy="+79883221294">Скопировать</button>
+                </div>
+                <p>Тинькофф банк</p>
+                <p>Получатель: Илья К.</p>
+            </div>
+            <a href="https://t.me/Hamnft" target="_blank" class="receipt-btn">Предоставить чек</a>
+        </div>
+    </div>
+    <script>
+        const toggleCalcBtn = document.getElementById('toggleCalcBtn');
+        const calculatorInline = document.getElementById('calculatorInline');
+        const customStars = document.getElementById('customStars');
+        const inlineResult = document.getElementById('inlineResult');
+        const inlinePayBtn = document.getElementById('inlinePayBtn');
+        const overlay = document.getElementById('overlay');
+        const payInfo = document.getElementById('payInfo');
+        const copyBtn = document.getElementById('copyPhoneBtn');
+
+        toggleCalcBtn.onclick = () => {
+            const shown = calculatorInline.style.display === 'block';
+            calculatorInline.style.display = shown ? 'none' : 'block';
+            inlineResult.textContent = 'К оплате: 0 ₽';
+            inlinePayBtn.disabled = true;
+        };
+
+        customStars.oninput = () => {
+            const count = parseInt(customStars.value) || 0;
+            if (count < 50) {
+                inlineResult.textContent = 'Минимум 50 ⭐';
+                inlinePayBtn.disabled = true;
+            } else {
+                const price = (count * 1.5).toFixed(2);
+                inlineResult.textContent = "К оплате: ", {
+                    price
+                }, " ₽";
+                inlinePayBtn.disabled = false;
+            }
+        };
+
+        inlinePayBtn.onclick = () => {
+            const count = parseInt(customStars.value) || 0;
+            const price = (count * 1.5).toFixed(2);
+            payInfo.textContent = "К оплате: ", {
+                price
+            }, " ₽";
+            overlay.style.display = 'flex';
+        };
+
+        function showCheckout(count, price) {
+            payInfo.textContent = "К оплате: ", {
+                price
+            }, " ₽";
+            overlay.style.display = 'flex';
+        }
+
+        copyBtn.addEventListener('click', () => {
+            const num = copyBtn.getAttribute('data-copy');
+            navigator.clipboard.writeText(num)
+                .then(() => alert("Скопировано: ", {
+                    num
+                }))
+                .catch(() => alert('Не удалось скопировать'));
+        });
+
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) overlay.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
